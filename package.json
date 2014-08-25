@@ -1,0 +1,21 @@
+{
+  "name": "esx-bower",
+  "version": "0.0.0",
+  "description": "Upgrade libraries with legacy loaders to ES6 module syntax.",
+  "author": "Marko Durkovic <marko@miding.de> (https://github.com/durko)",
+  "license": "MIT",
+  "dependencies": {
+    "bower": "~1.3.9",
+    "esprima": "git://github.com/esnext/esprima#harmony-esnext",
+    "recast": "~0.7.0",
+    "request": "~2.40.0",
+    "rsvp": "~3.0.13",
+    "semver": "~3.0.1"
+  },
+  "devDependencies": {},
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/durko/esx-bower"
+  }
+}
