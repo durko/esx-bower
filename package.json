@@ -1,6 +1,6 @@
 {
   "name": "esx-bower",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Upgrade libraries with legacy loaders to ES6 module syntax.",
   "author": "Marko Durkovic <marko@miding.de> (https://github.com/durko)",
   "license": "MIT",
