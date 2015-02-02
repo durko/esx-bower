@@ -357,12 +357,13 @@ Bower.prototype.filenames = function() {
     return filenames;
 };
 
-Bower.prototype.jsForPkg = function(name) {
-    var directory = this.state.directory;
+Bower.prototype.jsForPkg = function(pkg, names) {
+    var directory = this.state.directory,
+        files = names.length ? names : this.state.packages[pkg].files;
 
     function isJs(f) { return /\.js$/.test(f); }
-    return this.state.packages[name].files.filter(isJs).map(function(f) {
-        return path.join(directory, name, f);
+    return files.filter(isJs).map(function(f) {
+        return path.join(directory, pkg, f);
     });
 };
 
