@@ -76,8 +76,9 @@ var hooks = {
         return src.replace(new RegExp(parameters.regex), parameters.replace);
     },
     "jquery-plugin": function(parameters, source) {
+        var jquery = path.join(this.vendorPrefix, "jquery");
         return "" +
-            "import $ from \"vendor/jquery\";\n" +
+            "import $ from \"" + jquery + "\";\n" +
             "var jQuery = $, jquery = $;\n" +
             source +
             "\nexport default 0;";
@@ -121,6 +122,7 @@ function Bower(options) {
     this.patches = options.patches ||
         "https://raw.githubusercontent.com/durko/esx-legacy/master/patch.json";
     this.baseDir = options.baseDir || "src";
+    this.vendorPrefix = options.vendorPrefix || "";
 
     this.state = options.state || {};
     this.state.packages = this.state.packages || {};
@@ -330,7 +332,7 @@ Bower.prototype.pkgConfig = function() {
         filename = path.join(this.state.directory, name, filename);
 
         pkgs.push({
-            name: path.join("vendor", name),
+            name: path.join(this.vendorPrefix, name),
             main: path.basename(filename).replace(/\.js$/, ""),
             location: path.relative(this.baseDir, path.dirname(filename))
         });
@@ -368,7 +370,8 @@ Bower.prototype.jsForPkg = function(pkg, names) {
 };
 
 Bower.prototype.patch = function() {
-    var name, pkg, i, len, filename;
+    var _this = this,
+        name, pkg, i, len, filename;
 
     function ptc(filename, patches) {
         var patchedname = filename.replace(/\.js$/, ".es6.js");
@@ -390,8 +393,10 @@ Bower.prototype.patch = function() {
                     var i, transform;
                     for (i in patches) {
                         transform = patches[i];
-                        content = hooks[transform.type](transform.parameters,
-                            content);
+                        content = hooks[transform.type].call(_this,
+                            transform.parameters,
+                            content
+                        );
                     }
                     return writeFile(patchedname, content);
                 });
