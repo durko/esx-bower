@@ -236,6 +236,10 @@ Bower.prototype.extractBowerPackages = function(descriptions) {
                 for (k in v) {
                     files.push(v[k]);
                 }
+            } else if (k === "_remove") {
+                for (k in v) {
+                    files.splice(files.indexOf(v[k]), 1);
+                }
             } else {
                 if (!~files.indexOf(k)) {
                     files.push(k);
